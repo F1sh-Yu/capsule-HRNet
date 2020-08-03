@@ -84,12 +84,12 @@ if __name__ == "__main__":
         transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
     ])
 
-    dataset_train = BuildDataset('/HDD2/yjc/capsule+HRNet/', opt.train_set, transform_fwd)
+    dataset_train = BuildDataset('/HDD/yjc/capsule-HRNet/', opt.train_set, transform_fwd)
     assert dataset_train
     dataloader_train = torch.utils.data.DataLoader(dataset_train, batch_size=opt.batchSize, shuffle=False,
                                                    num_workers=int(opt.workers))
 
-    dataset_val = BuildDataset('/HDD2/yjc/capsule+HRNet/', opt.val_set , transform_fwd)
+    dataset_val = BuildDataset('/HDD/yjc/capsule-HRNet/', opt.val_set , transform_fwd)
     assert dataset_val
     dataloader_val = torch.utils.data.DataLoader(dataset_val, batch_size=opt.batchSize, shuffle=False,
                                                  num_workers=int(opt.workers))

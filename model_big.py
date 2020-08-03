@@ -187,7 +187,8 @@ class CapsuleNet(nn.Module):
         super(CapsuleNet, self).__init__()
 
         self.backbone = get_cls_net("cls_hrnet_w18_small_v2_sgd_lr5e-2_wd1e-4_bs32_x100.yaml","hrnet_w18_small_model_v2.pth")
-
+        self.bn1 = nn.BatchNorm2d(256,momentum=BN_MOMENTUM)
+        self.relu = nn.ReLU(inplace=True)
         self.num_class = num_class
         # primary Capsule
         self.fea_ext = FeatureExtractor()
@@ -207,6 +208,8 @@ class CapsuleNet(nn.Module):
     def forward(self, x, random=False, dropout=0.0):
 
         x = self.backbone(x)
+        x = self.bn1(x)
+        x = self.relu(x)
         z = self.fea_ext(x)
         z = self.routing_stats(z, random, dropout=dropout)
         # z[b, data, out_caps]
